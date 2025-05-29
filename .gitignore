@@ -1,6 +1,9 @@
 # Dépendances
 node_modules/
 node_modules/**/*
+!node_modules/electron/dist/
+node_modules/electron/dist/*
+!node_modules/electron/dist/electron
 
 # Production
 dist/

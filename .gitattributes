@@ -1,3 +1,24 @@
-dist/linux-unpacked/infolibertaire filter=lfs diff=lfs merge=lfs -text
-dist/InfoLibertaire-*.AppImage filter=lfs diff=lfs merge=lfs -text
-dist/*.deb filter=lfs diff=lfs merge=lfs -text
+# Git LFS
+*.AppImage filter=lfs diff=lfs merge=lfs -text
+*.deb filter=lfs diff=lfs merge=lfs -text
+dist/linux-unpacked/* filter=lfs diff=lfs merge=lfs -text
+node_modules/electron/dist/* filter=lfs diff=lfs merge=lfs -text
+
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Documents
+*.md text diff=markdown
+*.txt text
+*.json text
+
+# Scripts
+*.js text
+*.sh text eol=lf
+
+# Graphics
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.svg text
