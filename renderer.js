@@ -1,6 +1,14 @@
 const webview = document.getElementById('webview');
 const favoritesSelect = document.getElementById('favorites');
 
+// Ajout : désactiver le bouton Favori tant que le webview n'est pas prêt
+const favoriteBtn = document.querySelector('button[onclick="saveFavorite()"]');
+if (favoriteBtn) favoriteBtn.disabled = true;
+
+webview.addEventListener('did-finish-load', () => {
+  if (favoriteBtn) favoriteBtn.disabled = false;
+});
+
 function reloadPage() {
   webview.reload();
   console.log('Page actualisée');
@@ -9,36 +17,62 @@ function reloadPage() {
   }, 100);
 }
 
+// Fonction pour afficher la modale de saisie du favori
+function showFavoriteModal(defaultName, onSave) {
+  const modal = document.getElementById('favorite-modal');
+  const input = document.getElementById('favorite-name');
+  const okBtn = document.getElementById('favorite-ok');
+  const cancelBtn = document.getElementById('favorite-cancel');
+  modal.style.display = 'flex';
+  input.value = defaultName || '';
+  input.focus();
+
+  function cleanup() {
+    modal.style.display = 'none';
+    okBtn.removeEventListener('click', onOk);
+    cancelBtn.removeEventListener('click', onCancel);
+    input.removeEventListener('keydown', onKeyDown);
+  }
+  function onOk() {
+    const val = input.value.trim();
+    if (val) onSave(val);
+    cleanup();
+  }
+  function onCancel() {
+    cleanup();
+  }
+  function onKeyDown(e) {
+    if (e.key === 'Enter') onOk();
+    if (e.key === 'Escape') onCancel();
+  }
+  okBtn.addEventListener('click', onOk);
+  cancelBtn.addEventListener('click', onCancel);
+  input.addEventListener('keydown', onKeyDown);
+}
+
 // Fonction pour sauvegarder un favori
 function saveFavorite() {
   try {
-    webview.executeJavaScript(`
-      {
-        title: document.title,
-        url: window.location.href,
-        date: new Date().toISOString()
-      }
-    `).then((pageInfo) => {
-      const name = prompt("Nom du favori ?", pageInfo.title);
-      if (!name) return;
-
-      let favorites = JSON.parse(localStorage.getItem('favorites') || '{}');
-      favorites[name] = {
-        url: pageInfo.url,
-        date: pageInfo.date,
-        title: pageInfo.title
-      };
+    const url = webview.src;
+    showFavoriteModal(url, (name) => {
+      // Récupération des favoris existants
+      const currentFavorites = window.electronAPI.getFavorites() || {};
       
-      localStorage.setItem('favorites', JSON.stringify(favorites));
+      // Ajout du nouveau favori
+      currentFavorites[name] = { url };
+      
+      // Sauvegarde des favoris mis à jour
+      window.electronAPI.setFavorites(currentFavorites);
+      
+      // Mise à jour de l'interface
       updateFavoritesMenu();
+      
+      console.log('Favori sauvegardé :', { name, url });
       alert(`✅ Favori "${name}" ajouté avec succès !`);
-    }).catch(err => {
-      console.error('Erreur lors de la récupération des informations de la page:', err);
-      alert('❌ Impossible de sauvegarder ce favori. Veuillez réessayer.');
     });
   } catch (err) {
-    console.error('Erreur lors de la sauvegarde du favori:', err);
-    alert('❌ Une erreur est survenue lors de la sauvegarde du favori.');
+    console.error('Erreur lors de la sauvegarde:', err);
+    alert('❌ Impossible d\'ajouter le favori. Erreur: ' + err.message);
   }
 }
 
@@ -81,15 +115,8 @@ function updateFavoritesMenu() {
     defaultOption.textContent = '🔖 Favoris';
     favoritesSelect.appendChild(defaultOption);
 
-    // Récupérer et parser les favoris
-    let favorites;
-    try {
-      favorites = JSON.parse(localStorage.getItem('favorites') || '{}');
-    } catch (e) {
-      console.error('Erreur lors de la lecture des favoris:', e);
-      localStorage.setItem('favorites', '{}');
-      favorites = {};
-    }
+    // Récupérer les favoris via l'API electron
+    const favorites = window.electronAPI.getFavorites();
     
     // Trier les favoris par nom
     const sortedNames = Object.keys(favorites).sort((a, b) => 
@@ -98,20 +125,14 @@ function updateFavoritesMenu() {
 
     // Ajouter chaque favori au menu
     sortedNames.forEach(name => {
-      try {
-        const favorite = favorites[name];
-        const option = document.createElement('option');
-        option.textContent = name;
-        option.value = JSON.stringify(favorite);
-        favoritesSelect.appendChild(option);
-      } catch (e) {
-        console.error(`Erreur lors de l'ajout du favori "${name}":`, e);
-      }
+      const favorite = favorites[name];
+      const option = document.createElement('option');
+      option.textContent = name;
+      option.value = JSON.stringify(favorite);
+      favoritesSelect.appendChild(option);
     });
   } catch (err) {
     console.error('Erreur lors de la mise à jour du menu des favoris:', err);
-    // Ne pas afficher d'alerte pour éviter de bloquer l'interface
-    console.warn('❌ Une erreur est survenue lors de la mise à jour des favoris.');
   }
 }
 

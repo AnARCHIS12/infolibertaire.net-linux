@@ -10,7 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --linux deb appimage --win nsis portable"
+    "dist": "node build.js"
   },
   "build": {
     "appId": "net.infolibertaire.desktop",
@@ -19,7 +19,10 @@
       "**/*"
     ],
     "linux": {
-      "target": ["deb", "AppImage"],
+      "target": [
+        "deb",
+        "AppImage"
+      ],
       "icon": "build/icons",
       "category": "Network",
       "maintainer": "Ton Nom <ton@email.com>"
@@ -28,14 +31,18 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "portable",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ],
-      "icon": "build/icons/256x256.png"
+      "icon": "build/icons/icon.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -47,6 +54,6 @@
   },
   "devDependencies": {
     "electron": "28.1.0",
-    "electron-builder": "^24.0.0"
+    "electron-builder": "^24.13.3"
   }
 }

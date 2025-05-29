@@ -23,7 +23,8 @@ function createWindow() {
       contextIsolation: true,
       webviewTag: true,
       nodeIntegration: true,
-      nodeIntegrationInSubFrames: true
+      nodeIntegrationInSubFrames: true,
+      webSecurity: false // Désactive la sécurité web pour permettre executeJavaScript sur webview
     }
   });
 
