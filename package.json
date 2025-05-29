@@ -10,7 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --linux deb appimage"
+    "dist": "electron-builder --linux deb appimage --win nsis portable"
   },
   "build": {
     "appId": "net.infolibertaire.desktop",
@@ -20,9 +20,29 @@
     ],
     "linux": {
       "target": ["deb", "AppImage"],
-      "icon": "info.png",
+      "icon": "build/icons",
       "category": "Network",
       "maintainer": "Ton Nom <ton@email.com>"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icons/256x256.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   },
   "devDependencies": {

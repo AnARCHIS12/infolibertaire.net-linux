@@ -39,6 +39,14 @@ chmod +x InfoLibertaire-1.0.0.AppImage
 ./InfoLibertaire-1.0.0.AppImage
 ```
 
+## 🪟 Version Windows
+
+Une version Windows est disponible :
+- Installeur (.exe, NSIS) pour une installation permanente
+- Version portable (.exe) sans installation
+
+Consultez le fichier [README_windows.md](README_windows.md) pour les instructions détaillées d'installation et d'utilisation sur Windows.
+
 ## 💻 Développement
 
 Pour lancer l'application en mode développement :
