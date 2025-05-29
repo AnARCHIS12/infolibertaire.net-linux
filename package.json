@@ -1,0 +1,32 @@
+{
+  "name": "infolibertaire",
+  "version": "1.0.0",
+  "description": "Client dédié au site InfoLibertaire.net",
+  "author": {
+    "name": "Ton Nom",
+    "email": "ton@email.com"
+  },
+  "homepage": "https://InfoLibertaire.net",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux deb appimage"
+  },
+  "build": {
+    "appId": "net.infolibertaire.desktop",
+    "productName": "InfoLibertaire",
+    "files": [
+      "**/*"
+    ],
+    "linux": {
+      "target": ["deb", "AppImage"],
+      "icon": "info.png",
+      "category": "Network",
+      "maintainer": "Ton Nom <ton@email.com>"
+    }
+  },
+  "devDependencies": {
+    "electron": "28.1.0",
+    "electron-builder": "^24.0.0"
+  }
+}

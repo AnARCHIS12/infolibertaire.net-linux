@@ -1,0 +1,37 @@
+                    GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+                            Préambule
+
+  La Licence Publique Générale GNU est une licence libre et copyleft destinée aux
+logiciels et autres types de créations. Les licences de la plupart des logiciels
+et autres créations utilitaires sont conçues pour vous priver de votre liberté de
+les partager et de les modifier. En revanche, la Licence Publique Générale GNU
+garantit votre liberté de partager et de modifier toutes les versions d'un
+programme — pour assurer qu'il demeurera libre pour tous ses utilisateurs.
+
+  Quand nous parlons de logiciel libre, nous parlons de liberté, pas de prix.
+Nos Licences Publiques Générales sont conçues pour garantir que vous ayez la
+liberté de distribuer des copies de logiciels libres (et de les faire payer si
+vous le souhaitez), que vous receviez le code source ou puissiez l'obtenir si
+vous le voulez, que vous puissiez modifier le logiciel ou en utiliser des éléments
+dans de nouveaux programmes libres, et que vous sachiez que vous pouvez faire ces
+choses.
+
+  Pour protéger vos droits, nous devons empêcher que d'autres vous refusent ces
+droits ou vous demandent d'y renoncer. Vous avez donc certaines responsabilités
+si vous distribuez des copies du logiciel ou si vous le modifiez : les
+responsabilités de respecter la liberté des autres.
+
+[Pour le texte complet de la licence en français, visitez : 
+https://www.gnu.org/licenses/gpl-3.0.fr.html]
+
+Les quatre libertés essentielles :
+0. La liberté d'exécuter le programme comme vous le souhaitez, pour tout usage.
+1. La liberté d'étudier le fonctionnement du programme et de le modifier.
+2. La liberté de redistribuer des copies.
+3. La liberté de distribuer aux autres vos versions modifiées.

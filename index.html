@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>InfoLibertaire - Actualités Militantes</title>
+  <link rel="icon" type="image/png" href="info.png">
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    #toolbar {
+      background: #222;
+      color: white;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+    }
+    #toolbar button {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    #favorites { margin-left: auto; }
+    #window-controls {
+      margin-left: 20px;
+      display: flex;
+      gap: 5px;
+    }
+    #window-controls button {
+      margin: 0;
+      padding: 5px 10px;
+      border: none;
+      background: transparent;
+      color: white;
+    }
+    #window-controls button:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    webview {
+      width: 100%;
+      height: calc(100vh - 50px);
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <button onclick="reloadPage()">🔄 Actualiser</button>
+    <button onclick="saveFavorite()">⭐ Favori</button>
+    <button onclick="shareArticle()">📤 Partager</button>
+    <select id="favorites" onchange="loadFavorite(this.value)">
+      <option value="">🔖 Favoris</option>
+    </select>
+    <div id="window-controls">
+      <button onclick="minimizeWindow()">➖</button>
+      <button onclick="maximizeWindow()">🔲</button>
+      <button onclick="closeWindow()">❌</button>
+    </div>
+  </div>
+  <webview id="webview" src="https://InfoLibertaire.net" preload="renderer.js"></webview>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
